@@ -45,14 +45,14 @@ public class Presenter implements Serializable {
 	}
 
 
-    public MenuModel previous() {
+    public boolean goToPreviousContent() {
     	Iterator iterator = menuList.iterator();
-    	return (MenuModel) iterator.previous();
+    	return iterator.previous();
 	}
 
-	public MenuModel next() {
+	public boolean goToNextContent() {
      	Iterator iterator = menuList.iterator();
-    	return (MenuModel) iterator.next();
+    	return iterator.next();
 	}
 	
 	public void select(String key) {

@@ -31,18 +31,14 @@ public class HomePage extends WebPage {
 	private Model<String> afterKeyModel = new Model<String>();
 	private Model<String> afterDisplayModel = new Model<String>();
 
-
     private Presenter presenter;
+
+
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
 		
 		this.presenter = new Presenter();
-		MenuModel menu = this.presenter.currentMenu();
-		keyModel.setObject(menu.getKey());
-		displayModel.setObject(menu.getDisplay());
-
-		this.setBeforeModel();
-		this.setAfterModel();
+		this.reload();
 		
 		Form form = new Form("form");
 		this.add(form);
@@ -59,12 +55,8 @@ public class HomePage extends WebPage {
 		Button prev = new Button("prev") {
 			@Override
 			public void onSubmit() {
-				MenuModel menu = presenter.previous();
-				keyModel.setObject(menu.getKey());
-				displayModel.setObject(menu.getDisplay());
-
-    		    setBeforeModel();
-		        setAfterModel();
+				presenter.goToPreviousContent();
+				reload();
 			}
 		};
 		form.add(prev);
@@ -72,14 +64,8 @@ public class HomePage extends WebPage {
 		Button next = new Button("next") {
 			@Override
 			public void onSubmit() {
-
-		System.out.println("参照値:" + presenter.hashCode());
-				MenuModel menu = presenter.next();
-				keyModel.setObject(menu.getKey());
-				displayModel.setObject(menu.getDisplay());
-
-    		    setBeforeModel();
-		        setAfterModel();
+				presenter.goToNextContent();
+				reload();
 			}
 		};
 		form.add(next);
@@ -100,29 +86,6 @@ public class HomePage extends WebPage {
 
     }
 	
-	private void setBeforeModel() {
-    	MenuModel beforeMenu = this.presenter.beforeMenu();
-		if(beforeMenu != null) {
-			this.beforeKeyModel.setObject(beforeMenu.getKey());
-			this.beforeDisplayModel.setObject(beforeMenu.getDisplay());
-		}
-	}
-
-	private void setAfterModel() {
-		MenuModel afterMenu = this.presenter.afterMenu();
-		if(afterMenu != null) {
-		    this.afterKeyModel.setObject(afterMenu.getKey());
-			this.afterDisplayModel.setObject(afterMenu.getDisplay());
-		}
-	}
-
-	private void setCurrentModel() {
-		MenuModel currentMenu = this.presenter.currentMenu();
-	    this.keyModel.setObject(currentMenu.getKey());
-		this.displayModel.setObject(currentMenu.getDisplay());
-	}
-
-	
 	private Link generateMenuLink(final MenuModel menu) {
 		return new Link("menu-link") {
 			@Override
@@ -137,5 +100,27 @@ public class HomePage extends WebPage {
 		this.setCurrentModel();
 		this.setBeforeModel();
 		this.setAfterModel();
+	}
+
+	private void setCurrentModel() {
+		MenuModel currentMenu = this.presenter.currentMenu();
+	    this.keyModel.setObject(currentMenu.getKey());
+		this.displayModel.setObject(currentMenu.getDisplay());
+	}
+
+	private void setBeforeModel() {
+    	MenuModel beforeMenu = this.presenter.beforeMenu();
+		if(beforeMenu != null) {
+			this.beforeKeyModel.setObject(beforeMenu.getKey());
+			this.beforeDisplayModel.setObject(beforeMenu.getDisplay());
+		}
+	}
+
+	private void setAfterModel() {
+		MenuModel afterMenu = this.presenter.afterMenu();
+		if(afterMenu != null) {
+		    this.afterKeyModel.setObject(afterMenu.getKey());
+			this.afterDisplayModel.setObject(afterMenu.getDisplay());
+		}
 	}
 }

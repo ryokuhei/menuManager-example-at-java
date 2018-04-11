@@ -6,12 +6,12 @@ public interface Iterator {
 	public Object getNextObject();
 
 	public boolean hasPrevious();
-	public Object previous();
+	public boolean previous();
 
 	public boolean hasNext();
-	public Object next();
+	public boolean next();
 	
-	public void setPosition(String key);
+	public boolean setPosition(String key);
 
 
 }

@@ -54,14 +54,19 @@ public class MenuListIterator implements Iterator, Serializable {
 	}
 
 	@Override
-	public Object previous() {
-		if(this.isInfinite && !this.hasPrevious()) {
-			index = this.menuList.getCount() - 1;
-		} else {
-			index = index - 1;
-		}
+	public boolean previous() {
+
+		boolean isPrev = false;
 		
-		return this.menuList.getMenuAt(index);
+		if(this.hasPrevious()) {
+			index = index - 1;
+			isPrev = true;
+		} else if(this.isInfinite) {
+			index = this.menuList.getCount() - 1;
+			isPrev = true;
+		}
+
+		return isPrev;
 	}
 
 	@Override
@@ -72,20 +77,35 @@ public class MenuListIterator implements Iterator, Serializable {
 	}
 
 	@Override
-	public Object next() {
-
-		if(this.isInfinite && !this.hasNext()) {
-			index = 0;
-		} else {
+	public boolean next() {
+		
+		boolean isNext = false;
+		
+		if(this.hasNext()) {
 			index = index + 1;
+			isNext = true;
+		} else if(this.isInfinite) {
+			index = 0;
+			isNext = true;
 		}
 
-		return this.menuList.getMenuAt(index);
+		return isNext;
 	}
 	
 	@Override
-	public void setPosition(String key) {
-		this.index =  Integer.parseInt(key);
+	public boolean setPosition(String key) {
+
+		boolean isSet = false;
+		try {
+    		this.index =  Integer.parseInt(key);
+    		isSet = true;
+		} catch(NumberFormatException e) {
+
+			
+		}
+    	isSet = true;
+
+		return isSet;
 	}
 	
 	
