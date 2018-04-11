@@ -8,10 +8,12 @@ public class MenuModel implements Serializable {
 
 	private String key;
 	private String display;
+	private boolean isActive;
 	
 	public MenuModel(String key, String display) {
 		this.key = key;
 		this.display = display;
+		this.isActive = false;
 	}
 	
 	public String getKey() {
@@ -21,5 +23,11 @@ public class MenuModel implements Serializable {
 	public String getDisplay() {
 	    return this.display;
 	}
-
+	
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(Boolean state) {
+		this.isActive = state;
+	}
 }

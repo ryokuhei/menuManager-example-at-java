@@ -17,6 +17,8 @@ import org.apache.wicket.model.Model;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebPage;
 
 public class HomePage extends WebPage {
@@ -78,7 +80,15 @@ public class HomePage extends WebPage {
 
 				Link menuLink = generateMenuLink(menu);
 				item.add(menuLink);
-				menuLink.add(new Label("menu-display", menu.getDisplay()));
+				
+				if(menu.isActive()) {
+					menuLink.add(AttributeModifier.append("class", "active"));
+	    		} else {
+    				menuLink.add(AttributeModifier.remove("active"));
+				}
+
+				Label display = new Label("menu-display", menu.getDisplay());
+				menuLink.add(display);
 				
 			}
 		};

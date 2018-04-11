@@ -13,6 +13,7 @@ public class MenuListIterator implements Iterator, Serializable {
 	public MenuListIterator(MenuList menuList, int startIndex, boolean isInfinite) {
 		this.menuList = menuList;
 		this.index = startIndex;
+		menuList.getMenuAt(index).setActive(true);
 		this.isInfinite = isInfinite;
 	}
 
@@ -57,6 +58,7 @@ public class MenuListIterator implements Iterator, Serializable {
 	public boolean previous() {
 
 		boolean isPrev = false;
+		int oldIndex = this.index;
 		
 		if(this.hasPrevious()) {
 			index = index - 1;
@@ -64,6 +66,9 @@ public class MenuListIterator implements Iterator, Serializable {
 		} else if(this.isInfinite) {
 			index = this.menuList.getCount() - 1;
 			isPrev = true;
+		}
+		if(isPrev) {
+			this.toggleActiveState(oldIndex, this.index);
 		}
 
 		return isPrev;
@@ -80,6 +85,7 @@ public class MenuListIterator implements Iterator, Serializable {
 	public boolean next() {
 		
 		boolean isNext = false;
+		int oldIndex = this.index;
 		
 		if(this.hasNext()) {
 			index = index + 1;
@@ -88,6 +94,10 @@ public class MenuListIterator implements Iterator, Serializable {
 			index = 0;
 			isNext = true;
 		}
+		if(isNext) {
+			this.toggleActiveState(oldIndex, this.index);
+		}
+
 
 		return isNext;
 	}
@@ -95,20 +105,28 @@ public class MenuListIterator implements Iterator, Serializable {
 	@Override
 	public boolean setPosition(String key) {
 
+		int oldIndex = this.index;
 		boolean isSet = false;
 		try {
     		this.index =  Integer.parseInt(key);
     		isSet = true;
 		} catch(NumberFormatException e) {
-
 			
 		}
-    	isSet = true;
+
+		if(isSet) {
+			this.toggleActiveState(oldIndex, this.index);
+		}
 
 		return isSet;
 	}
 	
-	
+	private void toggleActiveState(int fromIndex, int toIndex) {
 
+		MenuModel fromMenu = this.menuList.getMenuAt(fromIndex);
+		MenuModel toMenu = this.menuList.getMenuAt(toIndex);
 
+		fromMenu.setActive(false);
+		toMenu.setActive(true);
+	}
 }
