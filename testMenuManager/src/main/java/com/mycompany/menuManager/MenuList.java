@@ -20,6 +20,11 @@ public class MenuList implements Aggregate, Serializable  {
 		return this.iterator;
 	}
 
+	public List<MenuModel> getMenuList() {
+		return this.menuList;
+	}
+
+
 	public MenuModel getMenuAt(int index) {
 		return this.menuList.get(index);
 	}

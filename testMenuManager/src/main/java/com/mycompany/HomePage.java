@@ -10,6 +10,9 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.SubmitLink;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.Model;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
@@ -40,8 +43,6 @@ public class HomePage extends WebPage {
 
 		this.setBeforeModel();
 		this.setAfterModel();
-
-
 		
 		Form form = new Form("form");
 		this.add(form);
@@ -82,6 +83,20 @@ public class HomePage extends WebPage {
 			}
 		};
 		form.add(next);
+		
+		ListView menuList = new ListView<MenuModel>("menu-list", this.presenter.getMenuList()) {
+
+			@Override
+			protected void populateItem(ListItem<MenuModel> item) {
+				MenuModel menu = item.getModelObject();
+
+				Link menuLink = generateMenuLink(menu);
+				item.add(menuLink);
+				menuLink.add(new Label("menu-display", menu.getDisplay()));
+				
+			}
+		};
+		form.add(menuList);
 
     }
 	
@@ -99,5 +114,28 @@ public class HomePage extends WebPage {
 		    this.afterKeyModel.setObject(afterMenu.getKey());
 			this.afterDisplayModel.setObject(afterMenu.getDisplay());
 		}
+	}
+
+	private void setCurrentModel() {
+		MenuModel currentMenu = this.presenter.currentMenu();
+	    this.keyModel.setObject(currentMenu.getKey());
+		this.displayModel.setObject(currentMenu.getDisplay());
+	}
+
+	
+	private Link generateMenuLink(final MenuModel menu) {
+		return new Link("menu-link") {
+			@Override
+			public void onClick() {
+				presenter.select(menu.getKey());
+				reload();
+			}
+		};
+	}
+	
+	private void reload() {
+		this.setCurrentModel();
+		this.setBeforeModel();
+		this.setAfterModel();
 	}
 }

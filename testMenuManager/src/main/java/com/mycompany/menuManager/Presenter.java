@@ -23,7 +23,10 @@ public class Presenter implements Serializable {
 		menuList.add(new MenuModel("3", "d"));
 		menuList.add(new MenuModel("4", "e"));
 		this.menuList = new MenuList(menuList);
-		
+	}
+	
+	public List<MenuModel> getMenuList() {
+		return this.menuList.getMenuList();
 	}
 
 	public MenuModel currentMenu() {
@@ -52,5 +55,9 @@ public class Presenter implements Serializable {
     	return (MenuModel) iterator.next();
 	}
 	
+	public void select(String key) {
+		Iterator iterator = menuList.iterator();
+		iterator.setPosition(key);
+	}
 
 }

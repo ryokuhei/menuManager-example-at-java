@@ -11,25 +11,45 @@
       body {
           text-align: center;
       }
-      table {
+      table#container {
           margin-top: 150px;
           margin-bottom: 30px;
           margin-left: auto;
           margin-right: auto;
       }
-      th {
+      #container th {
           padding-bottom: 10px;
       }
-      td {
+      #container td {
           padding: 15px 15px 15px 15px;
           white-space: nowrap;
       }
+
+      table#menu {
+          margin-top: 30px;
+          margin-bottom: 20px;
+          margin-left: auto;
+          margin-right: auto;
+      }
+      #menu td {
+          padding: 15px 15px 15px 15px;
+          white-space: nowrap;
+      }
+       #menu a {
+          text-decoration: none;
+      }
+     
+      #menu span {
+          font-size: x-large;
+      }
+
+
     </style>
   </head>
 
   <body>
     <form wicket:id= "form" id="form">
-      <table>
+      <table id="container">
         <tr>
           <th>Previous</th>
           <th></th>
@@ -59,6 +79,18 @@
             key: <span wicket:id="afterKey"></span>
             <br/>
             display: <span wicket:id="afterDisplay"></span>
+          </td>
+        </tr>
+      </table>
+      
+      <table id="menu">
+        <tr>
+          <td wicket:id="menu-list">
+            &nbsp;
+            <a wicket:id="menu-link">
+            <span wicket:id="menu-display"></span>
+            </a>
+            &nbsp;
           </td>
         </tr>
       </table>

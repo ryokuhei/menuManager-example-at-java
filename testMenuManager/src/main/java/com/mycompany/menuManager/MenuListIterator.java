@@ -83,6 +83,11 @@ public class MenuListIterator implements Iterator, Serializable {
 		return this.menuList.getMenuAt(index);
 	}
 	
+	@Override
+	public void setPosition(String key) {
+		this.index =  Integer.parseInt(key);
+	}
+	
 	
 
 

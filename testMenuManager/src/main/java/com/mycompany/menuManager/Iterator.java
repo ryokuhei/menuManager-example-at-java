@@ -10,6 +10,8 @@ public interface Iterator {
 
 	public boolean hasNext();
 	public Object next();
+	
+	public void setPosition(String key);
 
 
 }
