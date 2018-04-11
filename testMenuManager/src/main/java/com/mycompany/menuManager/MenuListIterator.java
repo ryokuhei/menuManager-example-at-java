@@ -17,18 +17,45 @@ public class MenuListIterator implements Iterator, Serializable {
 	}
 
 	@Override
-	public Object current() {
+	public Object getCurrentObject() {
 		return this.menuList.getMenuAt(index);
 	}
 
 	@Override
-	public boolean hasPrev() {
-		return this.index - 1 >= 0 ? true : false;
+	public Object getPreviousObject() {
+		Object previous = null;
+		if(this.hasPrevious()) {
+			previous = this.menuList.getMenuAt(index - 1);
+	    } else if(this.isInfinite && this.menuList.getCount() > 1) {
+			previous = this.menuList.getMenuAt(this.menuList.getCount() - 1);
+	    }
+
+		return previous;
 	}
 
 	@Override
-	public Object prev() {
-		if(this.isInfinite && !this.hasPrev()) {
+	public Object getNextObject() {
+		Object next = null;
+		if(this.hasNext()) {
+			next = this.menuList.getMenuAt(this.index + 1);
+	    } else if(this.isInfinite && this.menuList.getCount() > 1) {
+			next = this.menuList.getMenuAt(0);
+	    }
+
+		return next;
+	}
+
+
+	@Override
+	public boolean hasPrevious() {
+		boolean hasPrev = this.index - 1 >= 0 ? true : false;
+		System.out.println("has Previous: " + hasPrev);
+		return hasPrev;
+	}
+
+	@Override
+	public Object previous() {
+		if(this.isInfinite && !this.hasPrevious()) {
 			index = this.menuList.getCount() - 1;
 		} else {
 			index = index - 1;
@@ -39,7 +66,9 @@ public class MenuListIterator implements Iterator, Serializable {
 
 	@Override
 	public boolean hasNext() {
-		return this.index + 1 <= this.menuList.getCount() - 1 ? true : false;
+		boolean hasNext = this.index + 1 <= this.menuList.getCount() - 1 ? true : false;
+		System.out.println("has Next: " + hasNext);
+		return hasNext;
 	}
 
 	@Override
@@ -53,6 +82,8 @@ public class MenuListIterator implements Iterator, Serializable {
 
 		return this.menuList.getMenuAt(index);
 	}
+	
+	
 
 
 }

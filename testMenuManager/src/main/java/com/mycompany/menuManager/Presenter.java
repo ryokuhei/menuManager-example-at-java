@@ -28,16 +28,26 @@ public class Presenter implements Serializable {
 
 	public MenuModel currentMenu() {
      	Iterator iterator = menuList.iterator();
-    	return (MenuModel) iterator.current();
-	
+    	return (MenuModel) iterator.getCurrentObject();
 	}
 
-    public MenuModel prevMenu() {
+	public MenuModel beforeMenu() {
+     	Iterator iterator = menuList.iterator();
+    	return (MenuModel) iterator.getPreviousObject();
+	}
+
+	public MenuModel afterMenu() {
+     	Iterator iterator = menuList.iterator();
+    	return (MenuModel) iterator.getNextObject();
+	}
+
+
+    public MenuModel previous() {
     	Iterator iterator = menuList.iterator();
-    	return (MenuModel) iterator.prev();
+    	return (MenuModel) iterator.previous();
 	}
 
-	public MenuModel nextMenu() {
+	public MenuModel next() {
      	Iterator iterator = menuList.iterator();
     	return (MenuModel) iterator.next();
 	}

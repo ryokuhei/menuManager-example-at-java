@@ -1,11 +1,15 @@
 package com.mycompany.menuManager;
 
 public interface Iterator {
-	public Object current();
+	public Object getCurrentObject();
+	public Object getPreviousObject();
+	public Object getNextObject();
 
-	public boolean hasPrev();
-	public Object prev();
+	public boolean hasPrevious();
+	public Object previous();
 
 	public boolean hasNext();
 	public Object next();
+
+
 }
